@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"math/rand"
+	"time"
 )
 
 func main() {
@@ -58,4 +60,51 @@ func main() {
 	// 		break
 	// 	}
 	// }
+
+	// 打印空心金字塔
+	// 定义金字塔的层数
+	layers := 5
+
+	// 外层循环控制金字塔的层数
+	for i := 1; i <= layers; i++ {
+		// 打印空格，使金字塔居中
+		for j := 1; j <= layers-i; j++ {
+			fmt.Print(" ")
+		}
+
+		// 打印金字塔的左半边
+		for k := 1; k <= 2*i-1; k++ {
+			// 如果是第一层或最后一层，打印全部星号
+			if i == 1 || i == layers {
+				fmt.Print("*")
+			} else {
+				// 否则只打印第一个和最后一个星号，中间打印空格
+				if k == 1 || k == 2*i-1 {
+					fmt.Print("*")
+				} else {
+					fmt.Print(" ")
+				}
+			}
+		}
+
+		// 换行
+		fmt.Println()
+	}
+
+	// 随机取数
+	// 为了生成随机数需要用rand设置一个种子
+	// go1.20开始弃用rand.Seed
+	// time.Now().Unix()返回一个从1970:01:01的0时0分0秒到现在时间的秒数
+	var count int = 0
+	for {
+		rand.Seed(time.Now().UnixNano())
+		num1 := rand.Intn(100) + 1 //	[0,100)
+		fmt.Printf("num1=%d\n", num1)
+		count++
+		if num1 == 99 {
+			break
+		}
+	}
+	fmt.Printf("生成99一共使用了%d次\n", count)
+
 }
