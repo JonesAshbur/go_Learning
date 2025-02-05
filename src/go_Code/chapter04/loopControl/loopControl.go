@@ -107,4 +107,41 @@ func main() {
 	}
 	fmt.Printf("生成99一共使用了%d次\n", count)
 
+	// break用于终止for循环或者跳出switch语句(最近的)
+	// break出现在多层嵌套的语句块中时，可以通过标签指明要跳转到哪一层
+	// lable1:
+	// 	for i := 0; i < 4; i++ {
+	// 		for j := 0; j < 10; j++ {
+	// 			if j == 2 {
+	// 				break lable1
+	// 			}
+	// 			fmt.Println("j=", j)
+	// 		}
+	// 	}
+
+	// continue终止本次循环，继续执行下一次循环
+	// continue出现在多层嵌套的语句块中时，可以通过标签指明要跳转到哪一层
+	for i := 0; i < 2; i++ {
+		for j := 0; j < 10; j++ {
+			if j == 2 {
+				continue
+			}
+			fmt.Println("j=", j)
+		}
+	}
+
+	// 跳转控制语句goto
+	// 1.无条件转移到程序中指定的行
+	// 2.通常与条件语句配合使用，可用来实现条件转移，跳出循环等功能
+	// 3.不主张使用goto语句
+
+	fmt.Println("1")
+	goto label2
+	fmt.Println("2")
+	fmt.Println("3")
+label2:
+	fmt.Println("4")
+	fmt.Println("5")
+
+	// return使用在函数中，表示跳出所在的方法或者函数
 }
