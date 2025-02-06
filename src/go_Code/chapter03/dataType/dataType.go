@@ -194,4 +194,17 @@ func main() {
 	// 引用类型：指针，切片slice，map，管道，interface
 	// 区别：值类型变量直接存储值，内存在栈中分配，引用类型变量存储的是一个地址，地址对应的空间才是真实值，内存通常在堆上分配，
 	//       当没有任何一个变量来引用这个地址时，地址对应的数据空间变为垃圾，由GC回收
+
+	// go语言支持自定义数据类型
+	// type 自定义数据类型名 数据类型 //相当于别名
+	// ex：type myint8 int8   //此时myint8可以当作int8使用
+	// ex：type mySum func(int,int) int	//mySum等价于 func(int,int) int
+	// 即使自定义数据类型和数据类型作用相同，但是数据类型不同
+	// myint8 虽然底层是 int8，但在 Go 的类型系统中，它被视为一个全新的独立类型
+	// 自定义数据类型可以提高代码可读性
+	type myint8 int8
+	var num17 myint8 = 100
+	fmt.Printf("myint8的数据类型是：%T,num17=%v\n", num17, num17)
+	// var num18 int8 = 5
+	// var num19 myint8 = num18 // 编译错误,需要显式类型转换：num19 = myint8(num18)
 }
