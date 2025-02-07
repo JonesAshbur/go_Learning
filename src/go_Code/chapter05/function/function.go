@@ -110,7 +110,7 @@ func main() {
 	res6 := func(n1 int, n2 int) int {
 		return n1 - n2
 	}
-	// res6可以反复调用，但是res6不是函数名
+	// res6可反复调用，但是res6不是函数名
 	res7 := res6(1000, 100)
 	fmt.Printf("res7=%v\n", res7)
 
