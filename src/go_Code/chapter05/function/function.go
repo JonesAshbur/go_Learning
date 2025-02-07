@@ -2,6 +2,17 @@ package main
 
 import "fmt"
 
+func init() {
+	fmt.Println("这是init函数")
+}
+
+// 全局匿名函数
+var (
+	AnonymousFunction = func(n1 int, n2 int) int {
+		return n1 + n2
+	}
+)
+
 func calculate(num1 float64, num2 float64, operator byte) float64 {
 	var res float64
 	switch operator {
@@ -82,4 +93,34 @@ func main() {
 	// 可变参数的使用
 	res4 := sum(10, 100, 1000)
 	fmt.Printf("res4=%v\n", res4)
+
+	// 每一个源文件都可以包含一个init函数，该函数会在main函数执行之前，被go运行框架调用
+	// 在init函数中完成初始化工作
+	// 如果一个文件包含全局变量定义，init函数和main函数，执行顺序是全局变量定义，init函数，main函数
+
+	// 匿名函数
+	// 如果某个函数只希望执行一次，可以使用匿名函数，匿名函数也可以实现多次调用
+	// 使用方式：1.定义匿名函数时直接调用（这种方式匿名函数只能调用一次）	2.将匿名函数赋值给一个变量
+	// 如果将匿名函数复制给一个全局变量，那么这个匿名函数就成为全局匿名函数
+	res5 := func(n1 int, n2 int) int {
+		return n1 + n2
+	}(100, 200)
+	fmt.Printf("res5=%v\n", res5)
+
+	res6 := func(n1 int, n2 int) int {
+		return n1 - n2
+	}
+	// res6可以反复调用，但是res6不是函数名
+	res7 := res6(1000, 100)
+	fmt.Printf("res7=%v\n", res7)
+
+	// 调用全局匿名函数
+	res8 := AnonymousFunction(100, 900)
+	fmt.Printf("res8=%v\n", res8)
+
+	// 函数参数的传递：
+	// 1.值传递和引用传递
+	// 2.不管是值传递还是引用传递，传递给函数的都是变量的副本，值传递是值拷贝，引用传递是地址拷贝
+	// 3.地址拷贝的效率更高，因为数据量小
+	// 4.值拷贝数据越大，效率越低
 }
