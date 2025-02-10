@@ -34,11 +34,11 @@ func main() {
 	fmt.Printf("dataString=%v数据类型：%T\n", dataString, dataString)
 
 	// 格式化日期时间方式二：数字固定不可修改，各个数字可以自由组合
-	fmt.Printf(nowTime.Format("2006/01/02 15:04:05"))
+	fmt.Printf("%s", nowTime.Format("2006/01/02 15:04:05"))
 	fmt.Println()
-	fmt.Printf(nowTime.Format("2006-01-02"))
+	fmt.Printf("%s", nowTime.Format("2006-01-02"))
 	fmt.Println()
-	fmt.Printf(nowTime.Format("15:04:05"))
+	fmt.Printf("%s", nowTime.Format("15:04:05"))
 	fmt.Println()
 
 	// 时间的常量
