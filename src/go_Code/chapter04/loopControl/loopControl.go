@@ -95,16 +95,18 @@ func main() {
 	// 为了生成随机数需要用rand设置一个种子
 	// go1.20开始弃用rand.Seed
 	// time.Now().Unix()返回一个从1970:01:01的0时0分0秒到现在时间的秒数
-	var count int = 0
+	localRand := rand.New(rand.NewSource(time.Now().UnixNano()))
+	count := 0
+
 	for {
-		rand.Seed(time.Now().UnixNano())
-		num1 := rand.Intn(100) + 1 //	[0,100)
+		num1 := localRand.Intn(100) + 1 // [1, 100]
 		fmt.Printf("num1=%d\n", num1)
 		count++
 		if num1 == 99 {
 			break
 		}
 	}
+
 	fmt.Printf("生成99一共使用了%d次\n", count)
 
 	// break用于终止for循环或者跳出switch语句(最近的)
