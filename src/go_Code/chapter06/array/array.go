@@ -1,6 +1,10 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"math/rand"
+	"time"
+)
 
 func main() {
 
@@ -50,4 +54,22 @@ func main() {
 	// 5.数组越界，报错panic
 	// 6.数组是值类型，默认值传递，只会进行值拷贝
 	// 7.数组长度是数组数据类型的一部分，长度不同，数据类型不同，传递函数参数时候要考虑数组长度
+
+	// 数组反转
+	// 初始化随机数种子
+	rand.Seed(time.Now().UnixNano())
+	// 创建一个长度为5的数组
+	var arr [5]int
+	// 随机生成五个数并放入数组
+	for i := 0; i < len(arr); i++ {
+		arr[i] = rand.Intn(100) // 生成0到99之间的随机数
+	}
+	// 打印原始数组
+	fmt.Println("原始数组:", arr)
+	// 反转数组
+	for i, j := 0, len(arr)-1; i < j; i, j = i+1, j-1 {
+		arr[i], arr[j] = arr[j], arr[i]
+	}
+	// 打印反转后的数组
+	fmt.Println("反转后的数组:", arr)
 }
