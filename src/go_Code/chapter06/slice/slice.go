@@ -58,4 +58,46 @@ func main() {
 	// cap是一个内置函数，用于统计切片容量，即最大可以存储多少个元素
 	// 切片定义完成后不能直接使用，本身为空，需要引用一个数组，或者使用make
 	// 切片可以继续切片
+
+	// append内置函数可以对切片进行动态追加
+	var slice5 []int = []int{100, 200, 300}
+	fmt.Println("slice5=", slice5)
+	slice5 = append(slice5, 400, 500)
+	fmt.Println("slice5=", slice5)
+	slice5 = append(slice5, slice5...)
+	fmt.Println("slice5=", slice5)
+	// append原理：
+	// 切片append操作本质上是对数组扩容
+	// go底层会创建新的数组newArray
+	// 将原来slice包含的元素拷贝到新的数组newArray
+	// slice重新引用新的数组newArray
+	// newArray在底层进行维护，不可见
+
+	// 切片的拷贝：切片使用内置函数copy完成拷贝,拷贝类型必须都是切片
+	// 如果slice容量不够，则根据有效容量进行拷贝
+	var arr3 []int = []int{1, 2, 3, 4, 5}
+	var slice6 = make([]int, 10)
+	fmt.Println("slice6=", slice6)
+	copy(slice6, arr3)
+	fmt.Println("slice6=", slice6)
+
+	// string和slice
+	// string底层是一个byte数组，因此string也可以进行切片处理
+	// string是不可改变的，不能通过slice来修改string
+	str1 := "hello,golang"
+	slice7 := str1[6:]
+	fmt.Println("slice7:", slice7)
+	// 如果需要修改字符串，先将字符串转换成一个byte切片[]byte或者[]rune，然后进行修改
+	str2 := "golang"
+	slice8 := []byte(str2)
+	slice8[0] = 'G'
+	str2 = string(slice8)
+	fmt.Println("str2:", str2)
+	// 转成[]byte后可以修改数字和英文，但是不能修改中文，因为byte占一个字节，而中文字符占三个字节
+	// 解决方法是将带有中文字符的字符串转成[]rune切片，rune按照字符处理，兼容汉字
+	str3 := "你好"
+	slice9 := []rune(str3)
+	slice9[0] = '不'
+	str3 = string(slice9)
+	fmt.Println("str3:", str3)
 }
