@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"sort"
+)
 
 func main() {
 
@@ -67,5 +70,56 @@ func main() {
 		fmt.Println("value=", val)
 	} else {
 		fmt.Println("没有找到")
+	}
+
+	// map的遍历
+	for key, value := range studentInformation {
+		fmt.Println("key:", key)
+		for key, value := range value {
+			fmt.Printf("\tkey:%v,value:%v\n", key, value)
+		}
+	}
+
+	// 获取map中键值对的个数
+	fmt.Println(len(names))
+
+	// map切片，切片的数据类型如果是map，称为slice of map，map的个数可以动态变化
+
+	heroes := make([]map[string]string, 2)
+	if heroes[0] == nil {
+		heroes[0] = make(map[string]string, 2)
+		heroes[0]["name"] = "牛魔王"
+		heroes[0]["age"] = "500"
+	}
+	newhero := map[string]string{
+		"name": "红孩儿",
+		"age":  "200",
+	}
+	heroes = append(heroes, newhero)
+	fmt.Println(heroes)
+
+	// map排序
+	// map中的key是无序的
+	mapDemo := make(map[int]int, 10)
+	mapDemo[9] = 1
+	mapDemo[0] = 5
+	mapDemo[4] = 7
+	mapDemo[7] = 9
+	mapDemo[1] = 6
+	mapDemo[3] = 2
+	fmt.Println(mapDemo)
+	// 按照map的key排序输出
+	// 1.先将map的key放入切片中
+	// 2.对切片进行排序
+	// 3.遍历切片，按照key来输出map的value
+	var keys []int
+	for index := range mapDemo {
+		keys = append(keys, index)
+	}
+	// 排序
+	sort.Ints(keys)
+	fmt.Println(keys)
+	for _, keys := range keys {
+		fmt.Printf("mapDemo[%v]=%v\n", keys, mapDemo[keys])
 	}
 }
