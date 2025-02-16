@@ -122,4 +122,9 @@ func main() {
 	for _, keys := range keys {
 		fmt.Printf("mapDemo[%v]=%v\n", keys, mapDemo[keys])
 	}
+
+	// map注意事项：
+	// 1.map是引用类型，遵守引用类型传递机制
+	// 2.map达到一定容量时会自动扩容，不会发生panic，可以的动态增长键值对
+	// 3.map的value也经常使用struct类型
 }
