@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 )
 
@@ -11,6 +12,11 @@ type example struct {
 	ptr     *int
 	slice   []int
 	mapDemo map[int]int
+}
+
+type person struct {
+	Name string
+	Age  int
 }
 
 func main() {
@@ -55,4 +61,44 @@ func main() {
 	person_01.mapDemo[1] = 2
 	fmt.Println(person_01.mapDemo)
 
+	// 创建结构体实例
+	// 方式一：直接声明	var structDemo variableName
+	// 方式二：var structDemo variableName = variableName{}
+	person_02 := person{"mary", 20}
+	person_02.Name = "tom"
+	fmt.Println(person_02)
+	// 方式三：var person *person = new(person)
+	var person_03 *person = new(person)
+	(*person_03).Name = "smith" //等价于 person_03.Name = "smith"
+	(*person_03).Age = 25
+	fmt.Println(*person_03)
+	// 方式四：var person *person = &person{}
+	var person_04 *person = &person{}
+	(*person_04).Name = "scoot"
+	// 等价于以下方式
+	person_04.Name = "ashbur"
+	fmt.Println(*person_04)
+	var person_05 *person = &person{"mary", 30}
+	fmt.Println(*person_05)
+
+	// 结构体注意事项
+	// 1.结构体字段在内存中都是连续的
+	// 2.结构体是用户单独定义的类型，和其它类型进行转换时需要有完全相同的字段（名字，个数，类型）
+	// 3.结构体进行type重新定义（相当于取别名），编译器认为是新的数据类型，但是相互之间可以强制转换
+	type student struct {
+		Name string `json:"name"`
+		Age  int    `json:"age"`
+	}
+	type stu student
+	var stu_01 student
+	var stu_02 stu = stu(stu_01)
+	fmt.Println(stu_01, stu_02)
+	// 4.struct每个字段上可以写一个tag，该tag可以通过反射机制获取，常见的使用场景是序列化和反序列化
+	student_01 := student{"jones", 20}
+	// 将student_01变量序列化为json格式字符串
+	jsonstr, err := json.Marshal(student_01)
+	if err != nil {
+		fmt.Println("json处理错误", err)
+	}
+	fmt.Println(string(jsonstr))
 }
