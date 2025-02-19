@@ -51,6 +51,8 @@ type Brand struct {
 	Name    string
 	Address string
 }
+
+// 多重继承
 type Phone struct {
 	Goods
 	Brand
@@ -61,6 +63,13 @@ type Pad struct {
 	*Goods
 	*Brand
 }
+
+// 结构体匿名字段为基本数据类型，不能有相同类型的字段（有名字可以）
+// type demo struct {
+// 	Goods
+// 	int
+// 	n int
+// }
 
 func main() {
 
@@ -92,7 +101,7 @@ func main() {
 	// 4.结构体嵌入两个或多个匿名结构体，如果两个匿名结构体有相同的字段和方法时，同时结构体本身没有同名的字段和方法，在访问时，就必须明确匿名结构体名字，否则报错
 	// 5.如果一个结构体嵌套了一个有名结构体，这种模式就是组合，如果是组合关系，那么访问组合结构体的字段或方法时，必须带上结构体名字（b.a.name)a是结构体b中的一个有名结构体
 	// 6.嵌套匿名结构体后，也可以在创建结构体变量时，直接指定各个匿名结构体字段的值
-
+	// 7.结构体的匿名字段也可以是基本数据类型
 	phoneList_01 := Phone{Goods{"Phone__1", 8999.9}, Brand{"Apple", "America"}} //字段顺序固定
 	phoneList_02 := Phone{
 		Goods{
@@ -129,4 +138,7 @@ func main() {
 	}
 	fmt.Println(*(padList_01.Goods), *padList_01.Brand)
 	fmt.Println(*padList_02.Goods, *padList_02.Brand)
+
+	// 多重继承：如果一个结构体嵌套了多个匿名结构体，那么该结构体可以直接访问嵌套的匿名结构体的字段和方法，从而实现多重继承
+	// 为了代码的简洁性，不建议使用多重继承
 }
