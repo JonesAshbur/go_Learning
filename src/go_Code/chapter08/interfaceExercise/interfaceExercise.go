@@ -31,7 +31,7 @@ func (hs HeroSlice) Swap(i, j int) {
 }
 func main() {
 	var heros HeroSlice
-	for i := 0; i < 10; i++ {
+	for range 10 {
 		hero := Hero{
 			Name: fmt.Sprintf("英雄序号%d", rand.Intn(100)),
 			Age:  rand.Intn(100),
@@ -48,4 +48,13 @@ func main() {
 	for _, value := range heros {
 		fmt.Println(value)
 	}
+
+	// 接口和继承的比较
+	// 1.当A结构体继承了B结构体，A就自动继承了B的字段和方法，并且可以直接使用
+	// 2.当A结构体需要拓展某些功能，同时不希望破坏同B的继承关系，则可以去实现某个接口，可以认为接口是对继承机制的补充
+
+	// 继承主要解决代码的复用性和可维护性
+	// 接口主要设计好规范，让其他自定义类型去实现
+	// 接口比继承更加灵活
+	// 接口在一定程度上实现代码解耦
 }
