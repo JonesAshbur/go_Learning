@@ -84,16 +84,39 @@ func main() {
 	// 写入五句hello,golang
 	str_01 := "hello,golang\n"
 	// 使用带缓冲的writer
-	writer := bufio.NewWriter(file_01)
+	writer_01 := bufio.NewWriter(file_01)
 	for i := 0; i < 5; i++ {
-		writer.WriteString(str_01)
+		writer_01.WriteString(str_01)
 	}
 	// 因为writer带缓存，因此在调用writeString时，数据先写入到缓存，所以需要调用Flush方法，将缓存数据真正写入到文件中
-	writer.Flush()
+	writer_01.Flush()
 	content_01, err_01 := os.ReadFile(filepath_02) // 使用 os.ReadFile
 	if err != nil {
 		fmt.Println("读取文件失败:", err_01)
 	}
 	fmt.Println("文件内容:")
 	fmt.Println(string(content_01))
+
+	// 用新内容覆盖旧内容
+	filepath_03 := "E:/go_Learning/fileDemo/demo_02.txt"
+	file_02, error_02 := os.OpenFile(filepath_03, os.O_WRONLY|os.O_TRUNC, 0666)
+	if error_02 != nil {
+		fmt.Println("打开文件失败，原因是：", error_02)
+		return
+	}
+	defer file.Close()
+	// 重新写入五句hello,golang
+	str_02 := "hello,new content\n"
+	// 使用带缓冲的writer
+	writer_02 := bufio.NewWriter(file_02)
+	for i := 0; i < 10; i++ {
+		writer_02.WriteString(str_02)
+	}
+	writer_02.Flush()
+	content_02, err_02 := os.ReadFile(filepath_03)
+	if err != nil {
+		fmt.Println("读取文件失败:", err_02)
+	}
+	fmt.Println("文件内容:")
+	fmt.Println(string(content_02))
 }
