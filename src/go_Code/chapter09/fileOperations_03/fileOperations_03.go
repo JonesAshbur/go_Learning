@@ -8,7 +8,6 @@ import (
 )
 
 // 接收文件函数
-// 接收文件函数
 func CopyFile(dstFileName string, srcFileName string) (written int64, err error) {
 	srcFile, error := os.Open(srcFileName)
 	if error != nil {
