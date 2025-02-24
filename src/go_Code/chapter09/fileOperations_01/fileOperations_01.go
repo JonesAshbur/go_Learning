@@ -15,32 +15,32 @@ func main() {
 	// os.File封装所有文件相关的操作，File是一个结构体
 
 	// 打开文件
-	// file, error := os.Open("E:/go_Learning/fileDemo")
-	// if error != nil {
-	// 	fmt.Println("打开文件失败，原因是：", error)
-	// } else {
-	// 	fmt.Println("文件内容是：", file)
-	// }
-	// // 关闭文件
-	// err := file.Close()
-	// if err != nil {
-	// 	fmt.Println("关闭文件错误", err)
-	// } else {
-	// 	fmt.Println("关闭成功")
-	// }
+	file, error := os.Open("E:/go_Learning/fileDemo")
+	if error != nil {
+		fmt.Println("打开文件失败，原因是：", error)
+	} else {
+		fmt.Println("文件内容是：", file)
+	}
+	// 关闭文件
+	err := file.Close()
+	if err != nil {
+		fmt.Println("关闭文件错误", err)
+	} else {
+		fmt.Println("关闭成功")
+	}
 
 	// 读取文件内容并且显示在终端（带缓冲区的形式）
-	file, error := os.Open("E:/go_Learning/fileDemo/test.txt")
+	file, error = os.Open("E:/go_Learning/fileDemo/test.txt")
 	if error != nil {
 		fmt.Println("打开文件失败，原因是：", error)
 	}
 	// 关闭文件
 	defer file.Close() //及时关闭文件句柄，避免内存泄漏
 	// 创建一个带缓冲的*reader，默认缓冲区为4096
-	reader := bufio.NewReader(file)
+	reader_01 := bufio.NewReader(file)
 	for {
-		str, err := reader.ReadString('\n') //读到换行就结束
-		if err == io.EOF {                  //io.EOF代表读到文件末尾
+		str, err := reader_01.ReadString('\n') //读到换行就结束
+		if err == io.EOF {                     //io.EOF代表读到文件末尾
 			break
 		}
 		fmt.Print(str)
@@ -106,7 +106,7 @@ func main() {
 	}
 	defer file.Close()
 	// 重新写入五句hello,golang
-	str_02 := "hello,new content\n"
+	str_02 := "新内容\n"
 	// 使用带缓冲的writer
 	writer_02 := bufio.NewWriter(file_02)
 	for i := 0; i < 10; i++ {
@@ -119,4 +119,64 @@ func main() {
 	}
 	fmt.Println("文件内容:")
 	fmt.Println(string(content_02))
+
+	// 打开已存在文件，追加新内容
+	// 创建一个新文件
+	filepath_04 := "E:/go_Learning/fileDemo/demo_02.txt"
+	file_03, error_03 := os.OpenFile(filepath_04, os.O_WRONLY|os.O_APPEND, 0666)
+	if error_03 != nil {
+		fmt.Println("打开文件失败，原因是：", error_03)
+		return
+	}
+	defer file.Close()
+	// 写入五句hello,golang
+	str_03 := "追加的新内容\n"
+	// 使用带缓冲的writer
+	writer_03 := bufio.NewWriter(file_03)
+	for i := 0; i < 5; i++ {
+		writer_03.WriteString(str_03)
+	}
+	// 因为writer带缓存，因此在调用writeString时，数据先写入到缓存，所以需要调用Flush方法，将缓存数据真正写入到文件中
+	writer_03.Flush()
+	content_03, err_03 := os.ReadFile(filepath_03) // 使用 os.ReadFile
+	if err != nil {
+		fmt.Println("读取文件失败:", err_03)
+	}
+	fmt.Println("文件内容:")
+	fmt.Println(string(content_03))
+
+	// 打开已经存在的文件，将原有内容读出，显示在终端，追加新内容
+
+	filepath_05 := "E:/go_Learning/fileDemo/demo_03.txt"
+	file_04, error_04 := os.OpenFile(filepath_05, os.O_RDWR|os.O_APPEND, 0666)
+	if error_04 != nil {
+		fmt.Println("打开文件失败，原因是：", error_04)
+		return
+	}
+	defer file_04.Close()
+	// 先读取原来的内容并且显示在终端
+	reader_02 := bufio.NewReader(file_04)
+	for {
+		str, err := reader_02.ReadString('\n') //读到换行就结束
+		if err == io.EOF {                     //io.EOF代表读到文件末尾
+			break
+		}
+		fmt.Print(str)
+	}
+	fmt.Println("文件读取结束...")
+	// 写入五句hello,golang
+	str_04 := "读写追加的新内容111111111111\n"
+	// 使用带缓冲的writer
+	writer_04 := bufio.NewWriter(file_04)
+	for i := 0; i < 5; i++ {
+		writer_04.WriteString(str_04)
+	}
+	// 因为writer带缓存，因此在调用writeString时，数据先写入到缓存，所以需要调用Flush方法，将缓存数据真正写入到文件中
+	writer_04.Flush()
+	content_04, err_04 := os.ReadFile(filepath_05) // 使用 os.ReadFile
+	if err_04 != nil {
+		fmt.Println("读取文件失败:", err_04)
+	}
+	fmt.Println("文件内容:")
+	fmt.Println(string(content_04))
 }
