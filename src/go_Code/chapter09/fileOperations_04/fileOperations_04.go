@@ -47,7 +47,7 @@ func main() {
 			case value >= '0' && value <= '9':
 				count.NumCount++
 			case value == '\n':
-				// 忽略换行符
+				// 忽略换行
 			default:
 				count.OtherCount++
 			}
