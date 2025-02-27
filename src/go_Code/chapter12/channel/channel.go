@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func main() {
 
@@ -48,5 +50,34 @@ func main() {
 	close(intChan_01)
 	for value := range intChan_01 {
 		fmt.Println("value:", value)
+	}
+
+	// channel注意事项：
+	// 1.channel可以声明成只读或者只写的形式
+	// 默认情况下管道是双向的
+	// 只写：var chan_01 chan<- int
+	// 只读：var chan_02 <-chan int
+	// 2.使用select可以解决从管道取数据的阻塞问题
+	// 3.go协程中使用recover，解决写成中出现panic，导致程序崩溃问题（即使协程出现问题，主线程不受影响）
+
+	intChan_02 := make(chan int, 10)
+	for i := 0; i < cap(intChan_02); i++ {
+		intChan_02 <- i
+	}
+	charChan_01 := make(chan string, 5)
+	for i := 0; i < cap(charChan_01); i++ {
+		charChan_01 <- "hello" + fmt.Sprintf("%d", i)
+	}
+	for {
+		select {
+		case value := <-intChan_02: //如果channel没有关闭，不会一直阻塞导致死锁，会继续执行后面的case
+			fmt.Println("从intChan_02读取了数据：", value)
+		case value := <-charChan_01:
+			fmt.Println("从charChan_01读取了数据：", value)
+		default:
+			// time.Sleep(time.Second * 2)
+			fmt.Println("都没取到")
+			return
+		}
 	}
 }
