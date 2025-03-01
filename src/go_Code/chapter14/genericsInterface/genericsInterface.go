@@ -19,11 +19,6 @@ type address struct {
 // 泛型集合
 type MapT[k comparable, V any] map[k]V
 
-// 基本接口,可用于变量定义
-//type ToString interface {
-//	String() string
-//}
-
 func (u user) String() string {
 	return fmt.Sprintf("ID:%d,Name:%s,Age:%d", u.ID, u.Name, u.Age)
 }
