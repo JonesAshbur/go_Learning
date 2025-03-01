@@ -23,13 +23,31 @@ type customerT interface {
 	//单行取并集，多行取交集
 	int | int16 | int64 | float32 | float64 | ~int32 //包含int32及其所有衍生类型
 }
-type Myint32 int32   //int32衍生类型，是一个新类型
-type Myint64 = int64 //别名
-func getMaxNum[T int | float64](a, b T) T {
+
+// type Myint32 int32   //int32衍生类型，是一个新类型
+// type Myint64 = int64 //别名
+func getMaxNum[T customerT](a, b T) T {
 	if a > b {
 		return a
 	}
 	return b
+}
+
+// 内置类型comparable
+func getBuildInComparable[T comparable](a, b T) bool {
+	//comparable 类型 只支持 == != 两个操作
+	//	支持所有可用于== !=的基本数据类型
+	if a == b {
+		return true
+	}
+	return false
+}
+
+// 内置类型any
+func getBuildInAny[T any](a, b T) {
+	//comparable 类型 只支持 == != 两个操作
+	//	支持所有可用于== !=的基本数据类型
+	fmt.Println("内置any类型约束：", a, b)
 }
 func main() {
 
@@ -53,4 +71,11 @@ func main() {
 	//显示指定泛型类型
 	res02 := getMaxNum[float64](c, d)
 	fmt.Println("使用泛型数字比较结果：", res02)
+
+	var str1 string = "abc"
+	var str2 string = "def"
+	res03 := getBuildInComparable(str1, str2)
+	fmt.Println("comparable比较结果：", res03)
+
+	getBuildInAny(str1, str2)
 }
