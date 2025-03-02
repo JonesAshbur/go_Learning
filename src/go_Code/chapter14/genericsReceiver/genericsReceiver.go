@@ -27,7 +27,7 @@ func ReceiverCase() {
 	dataContent2 := mystruct2.GetData()
 	fmt.Println(*dataContent1)
 	fmt.Println(*dataContent2)
-	fmt.Println(mystruct1, mystruct2)
+	//fmt.Println(mystruct1, mystruct2)
 }
 func main() {
 	ReceiverCase()
