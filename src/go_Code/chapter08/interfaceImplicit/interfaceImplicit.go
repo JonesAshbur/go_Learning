@@ -16,7 +16,7 @@ type Animal interface {
 	Run()
 }
 
-// 实例
+// animal实例
 type animal struct {
 }
 
