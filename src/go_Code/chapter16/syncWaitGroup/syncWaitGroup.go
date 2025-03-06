@@ -26,28 +26,80 @@
 package main
 
 import (
+	"context"
 	"fmt"
+	"os"
+	"os/signal"
 	"sync"
 	"time"
 )
 
-func waitGroupCase() {
+func waitGroupCase1() {
+	//单协程
 	var a, b int = 1, 2
 	start := time.Now()
 	for i := 0; i < 10000000000; i++ {
 		multi(a, b)
 	}
 	t := time.Since(start)
-	fmt.Println(t)
+	fmt.Println("单协程执行时间：", t)
 	start = time.Now()
+	//多协程
 	wg := sync.WaitGroup{}
 	for i := 0; i < 8; i++ {
 		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			for j := 0; j < 1250000000; j++ {
+				multi(a, b)
+			}
+		}()
 	}
+	wg.Wait()
+	t = time.Since(start)
+	fmt.Println("多协程执行时间：", t)
 }
 func multi(a, b int) int {
 	return a * b
 }
+
+func waitGroupCase2() {
+	ch := make(chan []int, 1000)
+	start := time.Now()
+	wg2 := sync.WaitGroup{}
+	wg2.Add(1)
+	go func() {
+		defer wg2.Done()
+		i := 0
+		for item := range ch {
+			fmt.Println(multi(item[0], item[1]))
+			i++
+		}
+		time.Sleep(time.Second * 3)
+		fmt.Println("数据处理完成，数据条数：", i)
+	}()
+	wg := &sync.WaitGroup{}
+	for i := 1; i <= 2; i++ {
+		wg.Add(1)
+		wg2.Add(1)
+		go func(wg1 *sync.WaitGroup) {
+			defer wg.Done()
+			defer wg2.Done()
+			for j := 1; j <= 500; j++ {
+				ch <- []int{i, j}
+			}
+		}(wg)
+	}
+	wg.Wait()
+	close(ch)
+	wg2.Wait()
+	t := time.Since(start)
+	fmt.Println("花费时间：", t)
+}
 func main() {
-	waitGroupCase()
+	waitGroupCase1()
+	waitGroupCase2()
+	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, os.Kill)
+	defer stop()
+	<-ctx.Done()
 }
