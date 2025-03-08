@@ -21,8 +21,8 @@ func main() {
 
 	// 文件操作案例
 	// 将demo_04文件中的内容写入到demo_05文件中
-	filePath_01 := "E:/go_Learning/fileDemo/demo_04.txt"
-	filePath_02 := "E:/go_Learning/fileDemo/demo_05.txt"
+	filePath_01 := "E:/golang_Learning/fileDemo/demo_04.txt"
+	filePath_02 := "E:/golang_Learning/fileDemo/demo_05.txt"
 	content, error_01 := os.ReadFile(filePath_01) // 使用 os.ReadFile
 	if error_01 != nil {
 		fmt.Println("读取文件失败:", error_01)
@@ -37,6 +37,6 @@ func main() {
 	// os.Stat()返回错误为nil说明文件或文件夹存在
 	// 返回的错误类型使用os.IsNotExist()判断为true，说明不存在
 	// 如果返回的错误类型为其他类型，则不确定是否存在
-	filePath_03 := "E:/go_Learning/fileDemo/demo_09.txt"
+	filePath_03 := "E:/golang_Learning/fileDemo/demo_09.txt"
 	PathExist(filePath_03)
 }

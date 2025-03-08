@@ -15,7 +15,7 @@ type CharCount struct {
 }
 
 func main() {
-	filePath := "E:/go_Learning/fileDemo/demo_06.txt"
+	filePath := "E:/golang_Learning/fileDemo/demo_06.txt"
 	file, err := os.Open(filePath)
 	if err != nil {
 		fmt.Println("文件打开失败：", err)

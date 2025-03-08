@@ -15,7 +15,7 @@ func main() {
 	// os.File封装所有文件相关的操作，File是一个结构体
 
 	// 打开文件
-	file, error := os.Open("E:/go_Learning/fileDemo")
+	file, error := os.Open("E:/golang_Learning/fileDemo")
 	if error != nil {
 		fmt.Println("打开文件失败，原因是：", error)
 	} else {
@@ -30,7 +30,7 @@ func main() {
 	}
 
 	// 读取文件内容并且显示在终端（带缓冲区的形式）
-	file, error = os.Open("E:/go_Learning/fileDemo/test.txt")
+	file, error = os.Open("E:/golang_Learning/fileDemo/test.txt")
 	if error != nil {
 		fmt.Println("打开文件失败，原因是：", error)
 	}
@@ -49,7 +49,7 @@ func main() {
 	fmt.Println("文件读取结束...")
 
 	// 读取文件内容并且显示在终端（使用ioutil一次性将整个文件读取到内存中），这种方式适用于文件不大的情况
-	filepath_01 := "E:/go_Learning/fileDemo/test.txt"
+	filepath_01 := "E:/golang_Learning/fileDemo/test.txt"
 	content, err := os.ReadFile(filepath_01) // 使用 os.ReadFile
 	if err != nil {
 		fmt.Println("读取文件失败:", err)
@@ -74,7 +74,7 @@ func main() {
 	// )
 
 	// 创建一个新文件
-	filepath_02 := "E:/go_Learning/fileDemo/demo_01.txt"
+	filepath_02 := "E:/golang_Learning/fileDemo/demo_01.txt"
 	file_01, error_01 := os.OpenFile(filepath_02, os.O_WRONLY|os.O_CREATE, 0666)
 	if error_01 != nil {
 		fmt.Println("打开文件失败，原因是：", error_01)
@@ -98,7 +98,7 @@ func main() {
 	fmt.Println(string(content_01))
 
 	// 用新内容覆盖旧内容
-	filepath_03 := "E:/go_Learning/fileDemo/demo_02.txt"
+	filepath_03 := "E:/golang_Learning/fileDemo/demo_02.txt"
 	file_02, error_02 := os.OpenFile(filepath_03, os.O_WRONLY|os.O_TRUNC, 0666)
 	if error_02 != nil {
 		fmt.Println("打开文件失败，原因是：", error_02)
@@ -122,7 +122,7 @@ func main() {
 
 	// 打开已存在文件，追加新内容
 	// 创建一个新文件
-	filepath_04 := "E:/go_Learning/fileDemo/demo_02.txt"
+	filepath_04 := "E:/golang_Learning/fileDemo/demo_02.txt"
 	file_03, error_03 := os.OpenFile(filepath_04, os.O_WRONLY|os.O_APPEND, 0666)
 	if error_03 != nil {
 		fmt.Println("打开文件失败，原因是：", error_03)
@@ -147,7 +147,7 @@ func main() {
 
 	// 打开已经存在的文件，将原有内容读出，显示在终端，追加新内容
 
-	filepath_05 := "E:/go_Learning/fileDemo/demo_03.txt"
+	filepath_05 := "E:/golang_Learning/fileDemo/demo_03.txt"
 	file_04, error_04 := os.OpenFile(filepath_05, os.O_RDWR|os.O_APPEND, 0666)
 	if error_04 != nil {
 		fmt.Println("打开文件失败，原因是：", error_04)
