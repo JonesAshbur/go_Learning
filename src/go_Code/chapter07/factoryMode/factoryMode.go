@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/jonesashbur/go_Learning/src/go_Code/chapter07/model"
+	"github.com/jonesashbur/golang_Learning/src/go_Code/chapter07/model"
 )
 
 func main() {
