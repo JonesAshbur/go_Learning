@@ -1,5 +1,5 @@
 //模块名
-module github.com/jonesashbur/go_Learning
+module github.com/jonesashbur/golang_Learning
 
 //go sdk版本
 go 1.22.6

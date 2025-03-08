@@ -20,7 +20,7 @@
 
 1. 克隆项目
 ```bash
-git clone https://github.com/jonesashbur/go_Learning.git
+git clone https://github.com/jonesashbur/golang_Learning.git
 cd golang_Learning
 ```
 
