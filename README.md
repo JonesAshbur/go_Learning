@@ -44,4 +44,4 @@ go run src/your_example.go
 
 ## 贡献
 
-欢迎提交 Issue 和 Pull Request！
+欢迎提交 Issue 和 Pull Request
